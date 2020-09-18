@@ -1,65 +1,44 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState } from "react";
+import axios from "axios";
+
+import s from "../styles/index.module.css";
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [apiResponse, setApiResponse] = useState("");
+
+  function handleSubmitEmail() {
+    axios.post("/api/register-email", { email }).then((response) => {
+      if (response.data.created) {
+        setApiResponse("E-mail cadastrado com sucesso.");
+      } else {
+        setApiResponse("Houve um problema para cadastrar seu e-mail.");
+      }
+    });
+  }
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+    <div className={s.container}>
+      <div className={s.box}>
+        <h2 className={s.title}>Insira seu e-mail:</h2>
+        <p className={s.text}>
+          Se inscreva em nossa newsletter para acompanhar mais de perto o mundo
+          da tecnologia!
         </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className={s.box2}>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={s.input}
+            placeholder="email@example.com"
+          />
+          <span className={s.text}>{apiResponse}</span>
         </div>
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+        <button className={s.button} onClick={handleSubmitEmail}>
+          INSCREVER-SE
+        </button>
+      </div>
     </div>
-  )
+  );
 }
