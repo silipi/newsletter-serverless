@@ -12,9 +12,7 @@ async function connectToDatabase(uri) {
       useUnifiedTopology: true,
     });
 
-    const dbName = url.parse(uri).pathname.substr(1);
-
-    const db = client.db(dbName);
+    const db = client.db("serverless");
 
     cachedDb = db;
 
@@ -36,7 +34,7 @@ export default async (req, res) => {
 
   if (validateEmail(email)) {
     await collection.insertOne({
-      email,
+      email: email.toLowerCase(),
       subscribeAt: new Date(),
     });
     return res.status(201).json({ created: true });
