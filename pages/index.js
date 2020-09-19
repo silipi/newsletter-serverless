@@ -23,7 +23,7 @@ export default function Home() {
         <h2 className={s.title}>Insira seu e-mail:</h2>
         <p className={s.text}>
           Se inscreva em nossa newsletter para acompanhar mais de perto o mundo
-          da tecnologia!
+          da tecnologia.
         </p>
         <div className={s.box2}>
           <input
